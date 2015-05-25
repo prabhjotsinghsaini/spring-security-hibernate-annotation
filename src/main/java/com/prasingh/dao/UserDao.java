@@ -1,6 +1,9 @@
-package com.prasingh.users.dao;
+package com.prasingh.dao;
 
-import com.prasingh.users.model.User;
+import com.prasingh.model.User;
+
+
+
 
 public interface UserDao {
 

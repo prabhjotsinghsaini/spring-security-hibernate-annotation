@@ -1,4 +1,5 @@
-package com.prasingh.users.model;
+package com.prasingh.model;
+
 
 import java.util.HashSet;
 import java.util.Set;

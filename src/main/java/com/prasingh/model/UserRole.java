@@ -1,4 +1,4 @@
-package com.prasingh.users.model;
+package com.prasingh.model;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
