@@ -37,6 +37,7 @@
 		<hibernate.version>4.2.11.Final</hibernate.version>
 		<dbcp.version>1.4</dbcp.version>
 		<servletapi.version>2.5</servletapi.version>
+		<liquibase.version>3.3.3</liquibase.version>
 	</properties>
 
 	<dependencies>
@@ -148,7 +149,11 @@
 			<version>${servletapi.version}</version>
 			<scope>provided</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>${liquibase.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -183,7 +188,60 @@
 			        <failOnMissingWebXml>false</failOnMissingWebXml>
 			    </configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-maven-plugin</artifactId>
+				<version>3.0.5</version>
+				<executions>
+					<execution>
+						<phase>process-resources</phase>
+						<configuration>
+							<changeLogFile>/src/main/resources/sql/liquibase/db.changelog-master.xml</changeLogFile>
+							<propertyFileWillOverride>true</propertyFileWillOverride>
+							<propertyFile>liquibase.properties</propertyFile>
+							<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+							<contexts>${env}</contexts>
+						</configuration>
+						<goals>
+							<goal>update</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.liquibase</groupId>
+										<artifactId>
+											liquibase-maven-plugin
+										</artifactId>
+										<versionRange>
+											[3.0.5,)
+										</versionRange>
+										<goals>
+											<goal>update</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 </project>
